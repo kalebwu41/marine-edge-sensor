@@ -1,0 +1,6 @@
+[version]
+generator=pcbnew
+version=20211014
+
+[general]
+last_trace_renderer=default
