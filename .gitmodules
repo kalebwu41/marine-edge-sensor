@@ -1,0 +1,3 @@
+[submodule "nosuz-lib"]
+	path = nosuz-lib
+	url = https://github.com/nosuz/kicad-symbols-footprints.git

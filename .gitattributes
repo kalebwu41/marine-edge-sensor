@@ -1,0 +1,3 @@
+# Ensure Verilog files are detected as Verilog by GitHub linguist
+*.v linguist-language=Verilog
+hdl-verilog/*.v linguist-language=Verilog
