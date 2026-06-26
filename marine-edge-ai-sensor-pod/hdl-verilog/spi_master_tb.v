@@ -29,8 +29,6 @@ module spi_master_tb;
         .data_out(data_out),
         .data_valid(data_valid)
     );
-
-    //Generate a 50 MHz clock (20ns period -> 10ns high, 10ns low)
     always #10 clk = ~clk;
 
     // Test stimulus sequence
@@ -43,11 +41,12 @@ module spi_master_tb;
         addr = 7'h32; // Example address (e.g., DATAX0 on ADXL345)
 
         //hold reset for a few cycles
-        #40;
+        #100;
         rst_n = 1;
         
         // Wait then trigger the start pulse
-        #20;
+        #50;
+        addr= 7'h00;
         start = 1;
         
         // hold the start pulse high for one cycle, then drop it
@@ -55,26 +54,26 @@ module spi_master_tb;
         start = 0;
 
         // Provide a mock serial response on MISO for testing 
-        @(negedge cs_n);
+        // @(negedge cs_n);
         
-        #200; MISO = 1;
-        #200; MISO = 0;
-        #200; MISO = 1;
-        #200; MISO = 0;
-        #200; MISO = 1;
-        #200; MISO = 1;
-        #200; MISO = 0;
-        #200; MISO = 0;
+        // #200; MISO = 1;
+        // #200; MISO = 0;
+        // #200; MISO = 1;
+        // #200; MISO = 0;
+        // #200; MISO = 1;
+        // #200; MISO = 1;
+        // #200; MISO = 0;
+        // #200; MISO = 0;
 
         @(posedge data_valid);
-        #100;
+        $display("data received: %h", data_out);
+        #200;
         
         $finish;
     end
-    //waveform dupmping
     initial begin
-        $dumpfile("spi_master_tb.vcd");
-        $dumpvars(0, spi_master_tb);
+        $monitor("Time=%0t | State=%b | sclk=%b | cs_n=%b | MOSI=%b | DataValid=%b | DataOut=0x%h", 
+        $time, uut.state, sclk, cs_n, MOSI, data_valid, data_out);
     end
 
 endmodule
