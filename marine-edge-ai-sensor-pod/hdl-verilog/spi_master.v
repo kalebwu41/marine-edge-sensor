@@ -29,6 +29,8 @@ module spi_master (
             MOSI      <= 1'b0;
             bit_count <= 4'd0;
             shift_reg <= 16'h0000;
+            data_out   <= 8'h00; 
+            data_valid <= 1'b0;
         end else begin
             state <= next_state;
             
@@ -58,7 +60,6 @@ module spi_master (
         next_state = state;
         cs_n       = 1'b1;
         data_valid = 1'b0;
-        data_out   = data_out; 
 
         case (state)
             IDLE: begin
